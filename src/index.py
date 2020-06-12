@@ -1,14 +1,40 @@
 from flask import Flask, render_template, request, flash
 from flask_session import Session
-from flask_mysqldb import MySQL
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+ENV = 'prod'
+
 sess = Session()
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'Control123!'
-app.config['MYSQL_DB'] = 'agenda'
-mysql = MySQL(app)
+
+if ENV == 'dev':
+    app.debug = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Control123!@localhost/'
+
+else:
+    app.debug = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://pkmeechmeklwey:19cf0fc346c52c704cfcdfa855e543696951cf848a8db9146f089e769e0e6afa@ec2-52-87-135-240.compute-1.amazonaws.com:5432/d5l0uqffiart14'
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+class usuario(db.Model):
+    __tablename__ = 'usuario'
+    usr_id = db.Column(db.Integer, primary_key=True)
+    usr_first_name = db.Column(db.String(200))
+    usr_last_name = db.Column(db.String(200))
+    usr_password = db.Column(db.String(200))
+    usr_phone_nbr = db.Column(db.String(200))
+    usr_email = db.Column(db.String(200))
+
+    def __init__(self, usr_first_name, usr_last_name, usr_password, usr_phone_nbr, usr_email):
+        self.usr_first_name = usr_first_name
+        self.usr_last_name = usr_last_name
+        self.usr_password = usr_password
+        self.usr_phone_nbr = usr_phone_nbr
+        self.usr_email = usr_email
 
 
 @app.route('/')
@@ -25,10 +51,11 @@ def add_user():
         phone = request.form['phone']
         email = request.form['email']
 
-        cursor = mysql.connection.cursor()
-        cursor.execute('INSERT INTO usuario (usr_first_name, usr_last_name, usr_phone_nbr, usr_email) '
-                       'VALUES (%s, %s, %s, %s);', (first_name, last_name, phone, email))
-        mysql.connection.commit()
+        data = usuario (first_name, last_name, password, phone, email)
+
+        db.session.add(data)
+        db.session.commit()
+
         flash("contacto agregado satisfactoriamente!!!")
 
     return render_template('add-user.html')
@@ -52,5 +79,5 @@ if __name__ == '__main__':
 
     sess.init_app(app)
 
-    app.run(debug=True)
+    app.run()
 
