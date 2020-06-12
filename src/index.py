@@ -29,6 +29,8 @@ class usuario(db.Model):
     usr_phone_nbr = db.Column(db.String(200))
     usr_email = db.Column(db.String(200))
 
+    print("table created successfully")
+
     def __init__(self, usr_first_name, usr_last_name, usr_password, usr_phone_nbr, usr_email):
         self.usr_first_name = usr_first_name
         self.usr_last_name = usr_last_name
