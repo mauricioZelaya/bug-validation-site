@@ -6,7 +6,13 @@ app = Flask(__name__)
 
 ENV = 'prod'
 
-# sess = Session()
+sess = Session()
+app.secret_key = 'super secret key'
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['SESSION_USE_SIGNER'] = False
+app.config['SESSION_PERMANENT'] = True
+
+sess.init_app(app)
 
 if ENV == 'dev':
     app.debug = True
@@ -74,12 +80,7 @@ def delete_user():
 
 
 if __name__ == '__main__':
-    # app.secret_key = 'super secret key'
-    # app.config['SESSION_TYPE'] = 'filesystem'
-    # app.config['SESSION_USE_SIGNER'] = False
-    # app.config['SESSION_PERMANENT'] = True
-    #
-    # sess.init_app(app)
+
 
     app.run()
 
