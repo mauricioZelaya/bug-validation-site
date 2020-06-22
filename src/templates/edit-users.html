@@ -2,4 +2,33 @@
 
 {% block content %}
 <h1>Edit Users</h1>
+<div class="col-md-7">
+      <table class="table table-striped table-hover table-bordered table-sm bg-white">
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>fullname</td>
+            <td>email</td>
+            <td>phone</td>
+            <td>password</td>
+            <td>Operations</td>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contact in contacts %}
+          <tr>
+            <td>{{contact.usr_id}}</td>
+            <td>{{contact.usr_first_name}} {{contact.usr_last_name}}</td>
+            <td>{{contact.usr_email}}</td>
+            <td>{{contact.usr_phone_nbr}}</td>
+            <td>{{contact.usr_password}}</td>
+            <td>
+              <a href="/edit/{{contact.0}}" class="btn btn-secondary">edit</a>
+              <a href="/delete/{{contact.0}}" class="btn btn-danger btn-delete">delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 {% endblock %}

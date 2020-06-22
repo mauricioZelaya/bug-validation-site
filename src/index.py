@@ -59,7 +59,7 @@ def add_user():
         phone = request.form['phone']
         email = request.form['email']
 
-        data = usuario (first_name, last_name, password, phone, email)
+        data = usuario(first_name, last_name, password, phone, email)
 
         db.session.add(data)
         db.session.commit()
@@ -71,7 +71,11 @@ def add_user():
 
 @app.route('/edit-users')
 def edit_users():
-    return render_template('edit-users.html')
+    rows = db.session.query(usuario).all()
+    print(rows)
+    for row in rows:
+        print(row.usr_first_name)
+    return render_template('edit-users.html', contacts=rows)
 
 
 @app.route('/delete-user')
