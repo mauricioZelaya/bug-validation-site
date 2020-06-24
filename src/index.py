@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-ENV = 'prod'
+ENV = 'dev'
 
 sess = Session()
 app.secret_key = 'super secret key'
@@ -69,13 +69,13 @@ def add_user():
     return render_template('add-user.html')
 
 
-@app.route('/edit-users')
+@app.route('/list-users')
 def edit_users():
     rows = db.session.query(usuario).all()
-    print(rows)
-    for row in rows:
-        print(row.usr_first_name)
-    return render_template('edit-users.html', contacts=rows)
+    # print(rows)
+    # for row in rows:
+    #     print(row.usr_first_name)
+    return render_template('list-users.html', contacts=rows)
 
 
 @app.route('/delete-user')
@@ -84,7 +84,6 @@ def delete_user():
 
 
 if __name__ == '__main__':
-
 
     app.run()
 
