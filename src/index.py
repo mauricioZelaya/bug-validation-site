@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-ENV = 'dev'
+ENV = 'prod'
 
 sess = Session()
 app.secret_key = 'super secret key'
