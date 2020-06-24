@@ -72,9 +72,9 @@ def add_user():
 @app.route('/list-users')
 def edit_users():
     rows = db.session.query(usuario).all()
-    # print(rows)
-    # for row in rows:
-    #     print(row.usr_first_name)
+    print(rows)
+    for row in rows:
+        print(row.usr_first_name)
     return render_template('list-users.html', contacts=rows)
 
 
