@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, url_for
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
+# from werkzeug.utils import redirect
+from werkzeug.utils import redirect
 
 app = Flask(__name__)
 
-ENV = 'prod'
+ENV = 'dev'
 
 sess = Session()
 app.secret_key = 'super secret key'
@@ -25,6 +27,7 @@ else:
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
 
 class usuario(db.Model):
     __tablename__ = 'usuario'
@@ -70,18 +73,41 @@ def add_user():
 
 
 @app.route('/list-users')
-def edit_users():
+def list_users():
     rows = db.session.query(usuario).all()
-    print(rows)
+    # print(rows)
     for row in rows:
         print(row.usr_first_name)
     return render_template('list-users.html', contacts=rows)
 
 
+@app.route('/edit-users')
+def edit_users():
+    rows = db.session.query(usuario).all()
+    # print(rows)
+    for row in rows:
+        print(row.usr_first_name)
+    return render_template('edit-user.html', contacts=rows)
+
+
 @app.route('/delete-user')
 def delete_user():
-    return render_template('delete-user.html')
+    rows = db.session.query(usuario).all()
+    # print(rows)
+    for row in rows:
+        print(row.usr_first_name)
+    return render_template('delete-user.html', contacts=rows)
 
+
+@app.route('/delete/<string:usr_id>')
+def delete_contact(usr_id):
+
+    data = usuario.query.get(usr_id)
+    print(data)
+    db.session.delete(data)
+    db.session.commit()
+    flash('contact deleted successfully')
+    return redirect(url_for("delete_user"))
 
 if __name__ == '__main__':
 

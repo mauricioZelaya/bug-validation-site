@@ -1,31 +1,26 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1>Edit Users</h1>
+<h1>List Users</h1>
   <div class="table-responsive-lg">
       <table class="table table-sm table-dark" cellspacing="0" width="100%">
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">fullname</th>
-            <th scope="col">email</th>
-            <th scope="col">phone</th>
-            <th scope="col">password</th>
-            <th scope="col">Operations</th>
+            <th scope="col" style="max-width: 150px;">fullname</th>
+            <th scope="col" style="max-width: 150px;">email</th>
+            <th scope="col" style="max-width: 150px;">phone</th>
+            <th scope="col" style="max-width: 150px;">password</th>
           </tr>
         </thead>
         <tbody>
           {% for contact in contacts %}
           <tr>
-            <td>{{contact.usr_id}}</td>
-            <td>{{contact.usr_first_name}} {{contact.usr_last_name}}</td>
-            <td>{{contact.usr_email}}</td>
-            <td>{{contact.usr_phone_nbr}}</td>
-            <td class="hidetext">{{contact.usr_password}}</td>
-            <td>
-              <a href="/edit/{{contact.0}}" class="btn btn-secondary">edit</a>
-              <a href="/delete/{{contact.0}}" class="btn btn-danger btn-delete">delete</a>
-            </td>
+            <td style="max-width: 150px;">{{contact.usr_id}}</td>
+            <td style="max-width: 150px;">{{contact.usr_first_name}} {{contact.usr_last_name}}</td>
+            <td style="max-width: 150px;">{{contact.usr_email}}</td>
+            <td style="max-width: 150px;">{{contact.usr_phone_nbr}}</td>
+            <td class="hidetext" style="max-width: 150px;">{{contact.usr_password}}</td>
           </tr>
           {% endfor %}
         </tbody>

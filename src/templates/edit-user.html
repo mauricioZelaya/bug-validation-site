@@ -1,17 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
- <p>{{ message }}</p>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
-
-<h1>Delete Users</h1>
+<h1>Edit Users</h1>
   <div class="table-responsive-lg">
       <table class="table table-sm table-dark" cellspacing="0" width="100%">
         <thead>
@@ -33,10 +23,7 @@
             <td>{{contact.usr_phone_nbr}}</td>
             <td class="hidetext">{{contact.usr_password}}</td>
             <td>
-<!--              <form action="/delete-user" method="POST">-->
-              <a href="/delete/{{contact.usr_id}}" class="btn btn-danger btn-delete">delete</a>
-<!--                <button type="submit" class="btn btn-danger btn-delete">delete</button>-->
-<!--              </form>-->
+              <a href="/edit/{{contact.usr_id}}" class="btn btn-secondary">edit</a>
             </td>
           </tr>
           {% endfor %}
