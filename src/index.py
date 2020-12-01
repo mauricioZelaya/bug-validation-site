@@ -6,7 +6,7 @@ from werkzeug.utils import redirect
 
 app = Flask(__name__)
 
-ENV = 'dev'
+ENV = 'prod'
 
 sess = Session()
 app.secret_key = 'super secret key'
